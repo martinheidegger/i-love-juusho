@@ -1,0 +1,16 @@
+{
+  "name": "jigyosyo-en",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "csv-parse": "~1.1.0",
+    "hepburn": "1.0.0"
+  },
+  "license": "ISC"
+}
