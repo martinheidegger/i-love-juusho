@@ -136,7 +136,7 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
-    if ((res = /(([^０-９－目丁番地街区]+)ビル(ディング)?)$/ig.exec(rest))) {
+    if ((res = /(([^０-９－目丁番地街区号]+)ビル(ディング)?)$/ig.exec(rest))) {
       buildingName = res[1]
       rest = rest.substr(0, res.index)
     } else if ((res = /([０-９]+)条$/ig.exec(rest))) {
