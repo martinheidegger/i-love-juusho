@@ -15,6 +15,12 @@ module.exports = function (fields) {
         alternate = undefined
       }
     }
+
+    if ((res = /((南|東|西|北|右|左){1,2})?([０-９]+)線((南|東|西|北|右|左){1,2})?/g.exec(rest))) {
+      areaName = res[0]
+      rest = rest.substr(0, res.index) + rest.substr(res.index + areaName.length)
+    }
+
     var info
     if ((res = /([０-９]+)階([^０-９－目丁番地街区条（]+)$/.exec(rest))) {
       info = res[2]
@@ -214,15 +220,6 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
-    var line
-    if ((res = /([０-９]+)線((南|東|西|北|右|左){1,2})?$/.exec(rest))) {
-      line = res[1]
-      if (res[2]) {
-        line += res[2]
-      }
-      rest = rest.substr(0, res.index)
-    }
-
     var areaName
     if ((res = /^([^０-９]+)$/.exec(rest))) {
       areaName = res[1]
@@ -232,7 +229,7 @@ module.exports = function (fields) {
     if (rest === '') {
       return {
         _raw: field,
-        line: line,
+        line: '',
         areaName: areaName,
         area: area,
         info: info,
@@ -366,7 +363,7 @@ module.exports = function (fields) {
       _raw: field,
       rest: rest,
       area: area,
-      line: line,
+      line: '',
       areaName: areaName,
       info: info,
       alternate: alternate,
