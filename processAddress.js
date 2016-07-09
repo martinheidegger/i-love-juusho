@@ -33,7 +33,7 @@ module.exports = function (fields) {
       if (res[2]) {
         floors = [res[2], [res[3], res[5]]]
       } else {
-        floors = [res[3], res[5]]
+        floors = [[res[3], res[5]]]
       }
       roomNumber = res[7]
       rest = rest.substr(0, res.index)
