@@ -7,7 +7,7 @@ module.exports = function (fields) {
     var res
 
     if ((res = /（(.*)）$/ig.exec(rest))) {
-      alternate = res[1]
+      alternate = res[1].replace(/）（/g, ',')
       rest = rest.substr(0, res.index)
       if ((res = /^([０-９]+)(階|Ｆ)(～([０-９]+)(階|Ｆ))?([０-９]+)?$/ig.exec(alternate))) {
         floors = [res[1], res[4]]
