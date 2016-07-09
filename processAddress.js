@@ -87,7 +87,7 @@ module.exports = function (fields) {
     }
     if ((res = /^([０-９]+)番地(.*)$/.exec(rest))) {
       area = res[1]
-      buildingName = res[2]
+      district = res[2]
       rest = ''
     }
     if ((res = /^([^０-９]+)([０-９]+)番([０-９]+)－([０-９]+)$/.exec(rest))) {
