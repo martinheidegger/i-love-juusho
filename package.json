@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard",
+    "test": "npm run lint && npm run quick",
+    "quick": "./node_modules/.bin/tap test/**"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +14,9 @@
     "csv-parse": "~1.1.0",
     "hepburn": "1.0.0"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^7.1.2",
+    "tap": "^6.1.1"
+  }
 }
