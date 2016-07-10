@@ -73,10 +73,10 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
-    if ((res = /^([０-９]+)(の([０-９]+))?(の([０-９]+))?$/.exec(rest))) {
+    if ((res = /^([０-９]+)((丁目|の)([０-９]+))?(の([０-９]+))?$/.exec(rest))) {
       area = res[1]
-      district = res[3]
-      buildingNumber = res[3]
+      district = res[4]
+      buildingNumber = res[6]
       rest = ''
     }
     if ((res = /^第([０-９]+)地割([０-９]+)$/.exec(rest))) {
