@@ -91,9 +91,9 @@ module.exports = function (fields) {
       buildingName = res[4]
       rest = ''
     }
-    if ((res = /^([０-９]+)番地(.*)$/.exec(rest))) {
+    if ((res = /^([０-９]+)番地(([０-９]+).*)?$/.exec(rest))) {
       area = res[1]
-      district = res[2]
+      district = res[3]
       rest = ''
     }
     if ((res = /^([^０-９]+)([０-９]+)番([０-９]+)－([０-９]+)$/.exec(rest))) {
@@ -224,6 +224,21 @@ module.exports = function (fields) {
     if ((res = /^([^０-９]+)$/.exec(rest))) {
       areaName = res[1]
       rest = ''
+    }
+
+    if (!area && district) {
+      area = district
+      district = undefined 
+    }
+
+    if (!area && buildingNumber) {
+      area = buildingNumber
+      buildingNumber = undefined
+    }
+
+    if (!district && buildingNumber) {
+      district = buildingNumber
+      buildingNumber = undefined
     }
 
     if (rest === '') {
