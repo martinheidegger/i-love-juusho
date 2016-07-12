@@ -229,7 +229,7 @@ module.exports = function (fields) {
 
     if (!area && district) {
       area = district
-      district = undefined 
+      district = undefined
     }
 
     if (!area && buildingNumber) {
