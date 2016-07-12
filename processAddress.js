@@ -128,7 +128,11 @@ module.exports = function (fields) {
     } else if ((res = /([^０-９－目丁番地街区条号の]+)([０-９]+)$/ig.exec(rest))) {
       if (res.index !== 0) {
         buildingName = res[1]
-        buildingNumber = res[2]
+        if (/第$/.test(buildingName)) {
+          buildingName += res[2]
+        } else {
+          buildingNumber = res[2]
+        }
         rest = rest.substr(0, res.index)
       }
     } else if ((res = /([^０-９－目丁番地街区条号]+([０-９・]+(丁目)?)ビル(ディング)?)$/ig.exec(rest))) {
