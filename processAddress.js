@@ -124,7 +124,7 @@ module.exports = function (fields) {
     if ((res = /([０-９]+)号$/ig.exec(rest))) {
       buildingNumber = res[1]
       rest = rest.substr(0, res.index)
-    } else if ((res = /([^０-９－目丁番地街区条号]+)([０-９]+)$/ig.exec(rest))) {
+    } else if ((res = /([^０-９－目丁番地街区条号の]+)([０-９]+)$/ig.exec(rest))) {
       if (res.index !== 0) {
         buildingName = res[1]
         buildingNumber = res[2]
@@ -184,7 +184,7 @@ module.exports = function (fields) {
 
     var area
     var direction
-    if ((res = /([０-９一二三四五六七八九十]+)(丁目?地?((南|東|西|北|右|左){1,2})?|－|地割|区)?(－?([０-９]+)(－([０-９]+))?(－([０-９]+))?)?([^０-９番街区条]+(第[０-９]+[^０-９番街区条]+)?)?$/ig.exec(rest))) {
+    if ((res = /([０-９一二三四五六七八九十]+)((丁目?地?|地割|番地|区)([南東西北右左]{1,2})?)?([－の]?([０-９]+)([－の]([０-９]+))?([－の]([０-９]+))?)?([^０-９番街区条]+(第[０-９]+[^０-９番街区条]+)?)?$/ig.exec(rest))) {
       if (res[6]) {
         if (district) {
           console.log('WARNING: district found twice: ' + field)
@@ -198,9 +198,9 @@ module.exports = function (fields) {
         buildingNumber = res[8]
       }
       area = res[1]
-      direction = res[3]
-      if (res[9]) {
-        floors = [res[9]]
+      direction = res[4]
+      if (res[10]) {
+        roomNumber = res[10]
       }
       if (res[11]) {
         if (buildingName) {
