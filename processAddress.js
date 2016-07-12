@@ -91,9 +91,10 @@ module.exports = function (fields) {
       buildingName = res[4]
       rest = ''
     }
-    if ((res = /^([０-９]+)番地?([ーの]?([０-９]+).*)?$/.exec(rest))) {
+    if ((res = /^([０-９]+)番地?([ーの]?([０-９]+)号?(.*))?$/.exec(rest))) {
       area = res[1]
       district = res[3]
+      buildingName = res[4]
       rest = ''
     }
     if ((res = /^([^０-９]+)([０-９]+)番([０-９]+)－([０-９]+)$/.exec(rest))) {
@@ -142,7 +143,7 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
-    if ((res = /(([^０-９－目丁番地街区号]+)ビル(ディング)?)$/ig.exec(rest))) {
+    if ((res = /((第[０-９]+)?([^０-９－目丁番地街区号]+)ビル(ディング)?)$/ig.exec(rest))) {
       buildingName = res[1]
       rest = rest.substr(0, res.index)
     } else if ((res = /([０-９]+)条$/ig.exec(rest))) {
@@ -184,7 +185,7 @@ module.exports = function (fields) {
 
     var area
     var direction
-    if ((res = /([０-９一二三四五六七八九十]+)((丁目?地?|地割|番地|区)([南東西北右左]{1,2})?)?([－の]?([０-９]+)([－の]([０-９]+))?([－の]([０-９]+))?)?([^０-９番街区条]+(第[０-９]+[^０-９番街区条]+)?)?$/ig.exec(rest))) {
+    if ((res = /第?([０-９一二三四五六七八九十]+)((丁目?地?|地割|番地|区)([南東西北右左]{1,2})?)?([－の]?([０-９]+)([－の]([０-９]+))?([－の]([０-９]+))?)?([^０-９番街区条]+(第[０-９]+[^０-９番街区条]+)?)?$/ig.exec(rest))) {
       if (res[6]) {
         if (district) {
           console.log('WARNING: district found twice: ' + field)
@@ -251,7 +252,7 @@ module.exports = function (fields) {
         alternate: alternate,
         direction: direction,
         district: district,
-        buildingName: buildingName,
+        buildingName: buildingName ? buildingName.trim() : undefined,
         buildingNr: buildingNumber,
         tower: tower,
         floors: floors,
