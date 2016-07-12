@@ -91,7 +91,7 @@ module.exports = function (fields) {
       buildingName = res[4]
       rest = ''
     }
-    if ((res = /^([０-９]+)番地の?(([０-９]+).*)?$/.exec(rest))) {
+    if ((res = /^([０-９]+)番地?([ーの]?([０-９]+).*)?$/.exec(rest))) {
       area = res[1]
       district = res[3]
       rest = ''
