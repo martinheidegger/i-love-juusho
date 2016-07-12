@@ -160,7 +160,7 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
-    if ((res = /－?([０-９]+)号([^－目丁番街区条号]+)?$/.exec(rest))) {
+    if ((res = /－?([０-９]+)号(([^－目丁番街区条号]?第[０-９]+)?[^－目丁番街区条号]+)?$/.exec(rest))) {
       buildingNumber = res[1]
       if (res[2]) {
         buildingName = res[2]
