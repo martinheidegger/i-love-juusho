@@ -62,8 +62,8 @@ module.exports = function (fields) {
     var buildingName
     var buildingNumber
 
-    if ((res = /[^０-９]([０-９]+)街区(([０-９]+)外)?$/ig.exec(rest))) {
-      areaName = rest.substr(0, res.index+1)
+    if ((res = /([０-９]+)街区(([０-９]+)外?)?$/ig.exec(rest))) {
+      areaName = rest.substr(0, res.index)
       area = res[1]
       district = res[3]
       rest = ''
