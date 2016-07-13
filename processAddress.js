@@ -209,7 +209,7 @@ module.exports = function (fields) {
       }
       if (res[8]) {
         if (buildingNumber) {
-          console.log('WARNING: buildingNumber found twice: ' + field)
+          roomNumber = buildingNumber
         }
         buildingNumber = res[8]
       }
