@@ -139,6 +139,13 @@ module.exports = function (fields) {
       buildingNumber = res[3]
       rest = ''
     }
+    if ((res = /^([^０-９]+)([０-９]+)番(([０-９]+)地)?$/ig.exec(rest))) {
+      area = res[2]
+      district = res[4]
+      areaName = res[1]
+      rest = ''
+    }
+    
     if ((res = /([０-９]+)号$/ig.exec(rest))) {
       buildingNumber = res[1]
       rest = rest.substr(0, res.index)
