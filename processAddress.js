@@ -179,6 +179,13 @@ module.exports = function (fields) {
       rest = rest.substr(0, res.index)
     }
 
+    if ((res = /^([０-９]+)丁目([０-９]+)丁目([０-９]+)番$/ig.exec(rest))) {
+      area = res[1]
+      district = res[2]
+      buildingNumber = res[3]
+      rest = ''
+    }
+
     var district
     if ((res = /([０-９]+)番地?丙?([－の]?([０-９]+)番?)?[－の]?([^０-９－丁番地街区条号]+)?$/ig.exec(rest))) {
       if (res[3]) {
