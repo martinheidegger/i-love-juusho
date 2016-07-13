@@ -165,7 +165,7 @@ module.exports = function (fields) {
     }
 
     var district
-    if ((res = /([０-９]+)番地?(－?([０-９]+)番?)?－?([^０-９－目丁番地街区条号]+)?$/ig.exec(rest))) {
+    if ((res = /([０-９]+)番地?丙?([－の]?([０-９]+)番?)?[－の]?([^０-９－目丁番地街区条号]+)?$/ig.exec(rest))) {
       if (res[3]) {
         if (buildingNumber) {
           area = res[1]
