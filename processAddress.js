@@ -118,6 +118,15 @@ module.exports = function (fields) {
       buildingNumber = res[3]
       rest = ''
     }
+
+    if ((res = /^([０-９]+)(丁目|－)([－の]?([０-９]+))?([－の]([０-９]+))?([－の]([０-９]+))?([^番号]*)$/ig.exec(rest))) {
+      area = res[1]
+      district = res[4]
+      buildingNumber = res[6]
+      roomNumber = res[8] || roomNumber
+      buildingName = res[9] || buildingName
+      rest = ''
+    }
     if ((res = /([０-９]+)号$/ig.exec(rest))) {
       buildingNumber = res[1]
       rest = rest.substr(0, res.index)
@@ -165,7 +174,7 @@ module.exports = function (fields) {
     }
 
     var district
-    if ((res = /([０-９]+)番地?丙?([－の]?([０-９]+)番?)?[－の]?([^０-９－目丁番地街区条号]+)?$/ig.exec(rest))) {
+    if ((res = /([０-９]+)番地?丙?([－の]?([０-９]+)番?)?[－の]?([^０-９－丁番地街区条号]+)?$/ig.exec(rest))) {
       if (res[3]) {
         if (buildingNumber) {
           area = res[1]
