@@ -15,8 +15,10 @@ fs.createReadStream('./JIGYOSYO_utf8.CSV').pipe(new CSVParser()).on('data', func
   if (newCode === code) {
     console.log('multiline')
   }
-  if (!processAddress(data[6], data)) {
+  var output = processAddress(data[6], data)
+  if (output.rest) {
     console.log(cnt + ' -> "' + data[6] + '"')
+    console.log(output)
     process.exit()
   }
   cnt++
