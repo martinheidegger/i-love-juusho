@@ -1,3 +1,58 @@
+// First let's define some "edge cases"...
+
+// `ナ－３－３` case
+function edgeCase1 (input) {
+  const res = /^(.)－([０-９]+)－([０-９]+)$/ig.exec(input)
+  if (res) {
+    return {
+      _raw: input,
+      area: res[1],
+      district: res[2],
+      buildingNr: res[3]
+    }
+  }
+}
+
+// `ニ－４１（加賀郵便局私書箱第９号）` and `ワ－１` case
+function edgeCase2 (input) {
+  const res = /^(.)－([０-９]+)（(.+)）$/ig.exec(input)
+  if (res) {
+    return {
+      _raw: input,
+      area: res[1],
+      district: res[2],
+      alternate: res[3]
+    }
+  }
+}
+
+// `ワ－１` case
+function edgeCase3 (input) {
+  const res = /^([^０-９]{1})－([０-９]+)$/ig.exec(input)
+  if (res) {
+    return {
+      _raw: input,
+      area: res[1],
+      district: res[2],
+      alternate: res[3]
+    }
+  }
+}
+
+// `ヨ８０` case
+function edgeCase4 (input) {
+  const res = /^([^０-９]{1})([０-９]+)$/ig.exec(input)
+  if (res) {
+    return {
+      _raw: input,
+      area: res[1],
+      district: res[2]
+    }
+  }
+}
+
+// And then, the main function.
+// Take a breath, it's 300 lines of poetry in action!
 module.exports = function (fields) {
   return function processAddress (field) {
     var rest = field
@@ -6,6 +61,20 @@ module.exports = function (fields) {
     var roomNumber
     var res
 
+    // Let's see if we can match some basic edge cases
+    const edgeCases = [
+      edgeCase1(field),
+      edgeCase2(field),
+      edgeCase3(field),
+      edgeCase4(field)
+    ]
+    // Search from the matching first edge case (the order matters!)
+    edgeCases.forEach(result => {
+      if (result && !res) res = result
+    })
+    if (res) return res // don't go further if we found something good!
+
+    // and from now, the real stuff begins
     if ((res = /（(.*)）$/ig.exec(rest))) {
       alternate = res[1].replace(/）（/g, ',')
       rest = rest.substr(0, res.index)
@@ -146,7 +215,7 @@ module.exports = function (fields) {
       areaName = res[1]
       rest = ''
     }
-    
+
     if ((res = /([０-９／]+[Ａ-Ｚａ-ｚ]*)号$/ig.exec(rest))) {
       buildingNumber = res[1].replace(/／/ig, ',')
       rest = rest.substr(0, res.index)
