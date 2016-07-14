@@ -147,8 +147,8 @@ module.exports = function (fields) {
       rest = ''
     }
     
-    if ((res = /([０-９]+[Ａ-Ｚａ-ｚ]*)号$/ig.exec(rest))) {
-      buildingNumber = res[1]
+    if ((res = /([０-９／]+[Ａ-Ｚａ-ｚ]*)号$/ig.exec(rest))) {
+      buildingNumber = res[1].replace(/／/ig, ',')
       rest = rest.substr(0, res.index)
     } else if ((res = /([^０-９－目丁番地街区条号の]+)([０-９]+)$/ig.exec(rest))) {
       if (res.index !== 0) {
