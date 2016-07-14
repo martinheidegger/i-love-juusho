@@ -54,7 +54,7 @@ module.exports = function (fields) {
     }
 
     var tower
-    if ((res = /[－の]?(第?([０-９Ａ-Ｚ]+)[条号番]*館.*)$/ig.exec(rest))) {
+    if ((res = /[－の]?(第?([０-９Ａ-Ｚ]+)[条号番]*[館棟].*)$/ig.exec(rest))) {
       tower = res[1]
       rest = rest.substr(0, res.index)
     }
