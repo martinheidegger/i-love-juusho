@@ -107,7 +107,7 @@ module.exports = function (fields) {
     }
     if ((res = /(([０-９]+)・)?([０-９]+)・([０-９]+)[Ｆ階]$/ig.exec(rest))) {
       if (res[2]) {
-      floors = [res[2], res[3], res[4]]
+        floors = [res[2], res[3], res[4]]
       } else {
         floors = [res[3], res[4]]     
       }
@@ -203,7 +203,7 @@ module.exports = function (fields) {
       buildingNumber = res[6]
       roomNumber = res[8] || roomNumber
       buildingName = res[9] || buildingName
-      if (res = /([^第０-９]+)([０-９]+)$/ig.exec(buildingName)) {
+      if ((res = /([^第０-９]+)([０-９]+)$/ig.exec(buildingName))) {
         if (!buildingNumber) {
           buildingNumber = res[2]
           buildingName = buildingName.substr(0, res.index) + res[1]
