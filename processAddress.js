@@ -117,7 +117,7 @@ module.exports = function (fields) {
       roomNumber = res[3]
       rest = rest.substr(0, res.index)
     }
-    if ((res = /([０-９]+)(([^０-９番地号]*[一二三四五六七八九十]+[^０-９]*)+)/.exec(rest))) {
+    if ((res = /([０-９]+)(([^０-９番地号]*[一二三四五六七八九十]+[^０-９]*)+)$/.exec(rest))) {
       buildingName = res[2]
       rest = rest.substr(0, res.index + res[1].length)
     }
