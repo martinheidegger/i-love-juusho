@@ -122,6 +122,12 @@ module.exports = function (fields) {
       roomNumber = res[3]
       rest = rest.substr(0, res.index)
     }
+    if ((res = /^([０-９一二三四五六七八九十]+)丁目([０-９一二三四五六七八九十]+)番地の([０-９一二三四五六七八九十]+)$/ig.exec(rest))) {
+      area = res[1]
+      district = res[2]
+      buildingNumber = res[3]
+      rest = ''
+    }
     if ((res = /([０-９]+)(([^０-９番地号]*[一二三四五六七八九十]+[^０-９]*)+)$/.exec(rest))) {
       buildingName = res[2]
       rest = rest.substr(0, res.index + res[1].length)
@@ -184,12 +190,6 @@ module.exports = function (fields) {
       areaName = res[1]
       area = res[2]
       district = res[3]
-      rest = ''
-    }
-    if ((res = /^([０-９一二三四五六七八九十]+)丁目([０-９一二三四五六七八九十]+)番地の([０-９一二三四五六七八九十]+)$/ig.exec(rest))) {
-      area = res[1]
-      district = res[2]
-      buildingNumber = res[3]
       rest = ''
     }
 
