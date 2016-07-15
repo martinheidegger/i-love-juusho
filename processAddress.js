@@ -199,6 +199,15 @@ module.exports = function (fields) {
       buildingNumber = res[6]
       roomNumber = res[8] || roomNumber
       buildingName = res[9] || buildingName
+      if (res = /([^第０-９]+)([０-９]+)$/ig.exec(buildingName)) {
+        if (!buildingNumber) {
+          buildingNumber = res[2]
+          buildingName = buildingName.substr(0, res.index) + res[1]
+        } else if (!roomNumber) {
+          roomNumber = res[2]
+          buildingName = buildingName.substr(0, res.index) + res[1]
+        }
+      }
       rest = ''
     }
     if ((res = /^([０-９]+)号([０-９]+)番地([０-９]+)－([０-９]+)$/ig.exec(rest))) {
