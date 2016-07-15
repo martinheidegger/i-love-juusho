@@ -10,7 +10,14 @@ function isEmpty (val) {
   return val === '' || val === undefined || val === null
 }
 
-fs.createReadStream(path.join(__dirname, 'addresses.csv'))
+var file
+if (process.env.FULL_TEST) {
+  file = path.join(__dirname, 'addresses_all.csv')
+} else {
+  file = path.join(__dirname, 'addresses.csv')
+}
+
+fs.createReadStream(file)
   .pipe(new CSVParser({
     columns: true,
     relax_column_count: true
