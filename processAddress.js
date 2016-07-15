@@ -318,6 +318,12 @@ module.exports = function (fields) {
 
     var area
     var direction
+    if ((res = /^([０-９一二三四五六七八九十]+)丁目([０-９一二三四五六七八九十]+)番地([^０-９]+)$/ig.exec(rest))) {
+      area = res[1]
+      district = res[2]
+      buildingName = res[3]
+      rest = ''
+    }
     if ((res = /第?([０-９一二三四五六七八九十]+)((丁目?地?|地割|番地|区)([南東西北右左]{1,2})?)?([－の]?([０-９]+)号?([－の]([０-９]+))?([－の]([０-９]+))?)?([^０-９番街区条]+(第[０-９]+[^０-９番街区条]+)?)?$/ig.exec(rest))) {
       if (res[6]) {
         if (district && !buildingNumber) {
