@@ -105,7 +105,7 @@ module.exports = function (fields) {
       floors = [res[1], res[2]]
       rest = rest.substr(0, res.index)
     }
-    if ((res = /(([０-９]+)・)?([０-９]+)・([０-９]+)[Ｆ階]$/ig.exec(rest))) {
+    if ((res = /(([０-９]+)・)?([０-９]+)[Ｆ階]?・([０-９]+)[Ｆ階]$/ig.exec(rest))) {
       if (res[2]) {
         floors = [res[2], res[3], res[4]]
       } else {
