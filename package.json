@@ -12,9 +12,10 @@
   "author": "",
   "dependencies": {
     "csv-parse": "~1.1.0",
+    "csv-write-stream": "^2.0.0",
     "hepburn": "1.0.0"
   },
-  "license": "ISC",
+  "license": "GPL",
   "devDependencies": {
     "standard": "^7.1.2",
     "tap": "^6.1.1"
