@@ -75,6 +75,14 @@ module.exports = function (fields) {
     if (res) return res // don't go further if we found something good!
 
     // and from now, the real stuff begins
+
+    // Treat 及び as an alternate splitter
+    if ((res = /及び(.+)$/ig.exec(rest))) {
+      alternate = res[1]
+      rest = rest.substr(0, res.index)
+    }
+
+    // Remove content in braces ()
     if ((res = /（(.*)）$/ig.exec(rest))) {
       alternate = res[1].replace(/）（/g, ',')
       rest = rest.substr(0, res.index)
