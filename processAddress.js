@@ -88,6 +88,17 @@ module.exports = function (fields) {
         buildingName = res[1]
         alternate = undefined
       }
+      if ((res = /([０-９]+[階Ｆ]?)・([０-９]+)[階Ｆ]/ig.exec(alternate))) {
+        if (res.index > 0) {
+          buildingName = alternate.substr(0, res.index)
+        }
+        if (res[1]) {
+          floors = [res[1], res[2]]
+        } else {
+          floors = [res[2]]
+        }
+        alternate = undefined
+      }
     }
 
     if ((res = /((南|東|西|北|右|左){1,2})?([０-９]+)線((南|東|西|北|右|左){1,2})?/g.exec(rest))) {
