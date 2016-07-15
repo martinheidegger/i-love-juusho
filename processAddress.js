@@ -78,9 +78,14 @@ module.exports = function (fields) {
     if ((res = /（(.*)）$/ig.exec(rest))) {
       alternate = res[1].replace(/）（/g, ',')
       rest = rest.substr(0, res.index)
-      if ((res = /^([０-９]+)(階|Ｆ)(～([０-９]+)(階|Ｆ))?([０-９]+)?$/ig.exec(alternate))) {
-        floors = [res[1], res[4]]
-        roomNumber = res[6]
+      if ((res = /^(.*ビル(ティング)?)?([０-９]+)(階|Ｆ)((～([０-９]+)(階|Ｆ))?([０-９]+)?)?$/ig.exec(alternate))) {
+        if (res[8]) {
+          floors = [[res[3], res[8]]]
+        } else {
+          floors = [res[3]]
+        }
+        roomNumber = res[10]
+        buildingName = res[1]
         alternate = undefined
       }
     }
