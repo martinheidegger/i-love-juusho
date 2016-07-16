@@ -41,7 +41,7 @@ function edgeCase3 (input) {
 
 // `ヨ８０` case
 function edgeCase4 (input) {
-  const res = /^([^０-９]{1})([０-９]+)$/ig.exec(input)
+  const res = /^([^０-９東西南北右左]{1})([０-９]+)$/ig.exec(input)
   if (res) {
     return {
       _raw: input,
@@ -75,6 +75,13 @@ module.exports = function (fields) {
     if (res) return res // don't go further if we found something good!
 
     // and from now, the real stuff begins
+    if ((res = /^([東西南北右左]+)[０-９]/.exec(rest))) {
+      var newRest = rest.substr(res[1].length)
+      if (!/^[０-９]線/.test(newRest)) {
+        direction = res[1]
+        rest = newRest
+      }
+    }
 
     // Treat 及び as an alternate splitter
     if ((res = /及び(.+)$/ig.exec(rest))) {
