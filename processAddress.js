@@ -1,55 +1,64 @@
-// First let's define some "edge cases"...
-
-// `ナ－３－３` case
-function edgeCase1 (input) {
-  const res = /^(.)－([０-９]+)－([０-９]+)$/ig.exec(input)
-  if (res) {
-    return {
-      _raw: input,
-      area: res[1],
-      district: res[2],
-      buildingNr: res[3]
-    }
+// First let's define some an array of simple "edge cases"...
+// Every object contains a regular expression and the JSON result keys (the order matters!)
+const simpleEdgeCases = [
+  {
+    // `ナ－３－３` case
+    re: /^(.)－([０-９]+)－([０-９]+)$/ig,
+    keys: ['area', 'district', 'buildingNr']
+  },
+  {
+    // `ニ－４１（加賀郵便局私書箱第９号）` and `ワ－１` cases
+    re: /^(.)－([０-９]+)（(.+)）$/ig,
+    keys: ['area', 'district', 'alternate']
+  },
+  {
+    // `ワ－１` case
+    re: /^([^０-９]{1})－([０-９]+)$/ig,
+    keys: ['area', 'district', 'alternate']
+  },
+  {
+    // `ヨ８０` case
+    re: /^([^０-９東西南北右左]{1})([０-９]+)$/ig,
+    keys: ['area', 'district']
+  },
+  {
+    // `５１７番地１番１号` case
+    re: /^([０-９]+)番地([０-９]+)番([０-９]+)号$/ig,
+    keys: ['area', 'district', 'buildingNr']
+  },
+  {
+    // `一丁目１３１３番`
+    re: /^([０-９一二三四五六七八九十]+)丁目([０-９]+)番$/ig,
+    keys: ['area', 'district']
+  },
+  {
+    // `１７８番地４柏の葉キャンパス１４８街区２` case
+    // note: we use a non greedy RegExp `.+?` to separate `柏の葉キャンパス` from `１４８`
+    re: /^([０-９]+)番地(.+?)([０-９]+)街区([０-９]+)$/ig,
+    keys: ['area', 'areaName', 'district', 'buildingNr']
+  },
+  {
+    // `１番９カフーナ旭橋Ｂ－１街区５階` case
+    re: /^([０-９]+)番([０-９]+)(.+?)([A-ZＡ-Ｚ－１]+)街区([０-９]+)階$/ig,
+    keys: ['area', 'district', 'buildingName', 'buildingNr', 'floors']
   }
-}
+]
 
-// `ニ－４１（加賀郵便局私書箱第９号）` and `ワ－１` case
-function edgeCase2 (input) {
-  const res = /^(.)－([０-９]+)（(.+)）$/ig.exec(input)
-  if (res) {
-    return {
-      _raw: input,
-      area: res[1],
-      district: res[2],
-      alternate: res[3]
-    }
+// Transform the previous array into an array of functions
+// that accept one parameter (the input to be checked)
+// and return a JSON object
+const edgeCases = simpleEdgeCases.map(item => input => {
+  const res = item.re.exec(input)
+  if (!res) return null
+  const json = {
+    _raw: input
   }
-}
-
-// `ワ－１` case
-function edgeCase3 (input) {
-  const res = /^([^０-９]{1})－([０-９]+)$/ig.exec(input)
-  if (res) {
-    return {
-      _raw: input,
-      area: res[1],
-      district: res[2],
-      alternate: res[3]
-    }
-  }
-}
-
-// `ヨ８０` case
-function edgeCase4 (input) {
-  const res = /^([^０-９東西南北右左]{1})([０-９]+)$/ig.exec(input)
-  if (res) {
-    return {
-      _raw: input,
-      area: res[1],
-      district: res[2]
-    }
-  }
-}
+  item.keys.forEach((key, i) => {
+    const value = res[i + 1]
+    json[key] = key === 'floors' ? [value] : value // `floors` field return an array
+  })
+  return json
+})
 
 // And then, the main function.
 // Take a breath, it's 300 lines of poetry in action!
@@ -62,15 +71,10 @@ module.exports = function (fields) {
     var res
 
     // Let's see if we can match some basic edge cases
-    const edgeCases = [
-      edgeCase1(field),
-      edgeCase2(field),
-      edgeCase3(field),
-      edgeCase4(field)
-    ]
     // Search from the matching first edge case (the order matters!)
-    edgeCases.forEach(result => {
-      if (result && !res) res = result
+    edgeCases.forEach(fn => {
+      const edgeCaseResult = fn(field)
+      if (edgeCaseResult && !res) res = edgeCaseResult
     })
     if (res) return res // don't go further if we found something good!
 
